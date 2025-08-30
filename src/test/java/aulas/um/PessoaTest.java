@@ -1,4 +1,4 @@
-package exercicioTesteUnitario;
+package aulas.um;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

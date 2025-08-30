@@ -1,6 +1,4 @@
-package exercicioTesteUnitario;
-
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ErrorMessages;
+package aulas.um;
 
 public class Pessoa {
 
