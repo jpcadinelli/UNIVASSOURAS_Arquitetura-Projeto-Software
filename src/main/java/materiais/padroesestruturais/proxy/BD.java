@@ -1,7 +1,5 @@
 package materiais.padroesestruturais.proxy;
 
-import padroesestruturais.flyweight.Cidade;
-
 import java.util.HashMap;
 import java.util.Map;
 

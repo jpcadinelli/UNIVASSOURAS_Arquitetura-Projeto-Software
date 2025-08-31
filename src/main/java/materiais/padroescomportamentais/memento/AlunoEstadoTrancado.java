@@ -1,7 +1,5 @@
 package materiais.padroescomportamentais.memento;
 
-import padroescomportamentais.state.Aluno;
-
 public class AlunoEstadoTrancado implements AlunoEstado {
 
     private AlunoEstadoTrancado() {};
