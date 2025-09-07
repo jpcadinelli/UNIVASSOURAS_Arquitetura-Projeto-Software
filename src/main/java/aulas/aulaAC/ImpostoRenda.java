@@ -2,18 +2,28 @@ package aulas.aulaAC;
 
 public class ImpostoRenda {
 
-    private double rendaMensal;
+    private double rendaAnualBruta;
+    private double contribuicaoINSS;
     private int dependentes;
     private double despesasMedicas;
     private double previdenciaPrivada;
     private double despesasEstudantis;
+    private double pensaoAlimenticiaAnual;
 
-    public double getRendaMensal() {
-        return rendaMensal;
+    public double getRendaAnualBruta() {
+        return rendaAnualBruta;
     }
 
-    public void setRendaMensal(double rendaMensal) {
-        this.rendaMensal = rendaMensal;
+    public void setRendaAnualBruta(double rendaAnualBruta) {
+        this.rendaAnualBruta = rendaAnualBruta;
+    }
+
+    public double getContribuicaoINSS() {
+        return contribuicaoINSS;
+    }
+
+    public void setContribuicaoINSS(double contribuicaoINSS) {
+        this.contribuicaoINSS = contribuicaoINSS;
     }
 
     public int getDependentes() {
@@ -40,44 +50,62 @@ public class ImpostoRenda {
         this.previdenciaPrivada = previdenciaPrivada;
     }
 
-    // ajustar função que calcula IRPF
-    public double calcularImposto() {
-        if (rendaMensal <= 0) {
+    public double getDespesasEstudantis() {
+        return despesasEstudantis;
+    }
+
+    public void setDespesasEstudantis(double despesasEstudantis) {
+        this.despesasEstudantis = despesasEstudantis;
+    }
+
+    public double getPensaoAlimenticiaAnual() {
+        return pensaoAlimenticiaAnual;
+    }
+
+    public void setPensaoAlimenticiaAnual(double pensaoAlimenticiaAnual) {
+        this.pensaoAlimenticiaAnual = pensaoAlimenticiaAnual;
+    }
+
+    public ImpostoRenda(double rendaAnualBruta, double contribuicaoINSS, int dependentes, double despesasMedicas, double previdenciaPrivada, double despesasEstudantis, double pensaoAlimenticiaAnual) {
+        this.rendaAnualBruta = rendaAnualBruta;
+        this.contribuicaoINSS = contribuicaoINSS;
+        this.dependentes = dependentes;
+        this.despesasMedicas = despesasMedicas;
+        this.previdenciaPrivada = previdenciaPrivada;
+        this.despesasEstudantis = despesasEstudantis;
+        this.pensaoAlimenticiaAnual = pensaoAlimenticiaAnual;
+    }
+
+    public double calcularImpostoAnual() {
+        if (this.rendaAnualBruta <= 0) {
             return 0.0;
         }
 
-        double deducaoDependentes = dependentes * 189.59;
-        double deducaoMedica = Math.min(despesasMedicas, 3000.0);
-        double deducaoPrevidencia = Math.min(previdenciaPrivada, 1200.0);
+        double deducaoPrevidencia = Math.min(this.previdenciaPrivada, this.rendaAnualBruta * 0.12);
+        double deducaoMedica = this.despesasMedicas;
+        double deducaoDependentes = this.dependentes * 2275.08;
 
-        double baseCalculo = rendaMensal - deducaoDependentes - deducaoMedica - deducaoPrevidencia;
+        double baseCalculo = this.rendaAnualBruta - this.contribuicaoINSS - this.pensaoAlimenticiaAnual -
+                deducaoDependentes - deducaoMedica - deducaoPrevidencia;
 
-        if (baseCalculo <= 2000) {
+        if (baseCalculo <= 26963.20) {
             return 0.0;
         }
 
         double imposto;
 
-        if (baseCalculo <= 3000) {
-            imposto = baseCalculo * 0.075;
-        } else if (baseCalculo <= 5000) {
-            imposto = baseCalculo * 0.15;
-        } else if (baseCalculo <= 7000) {
-            imposto = baseCalculo * 0.225;
-        } else {
-            imposto = baseCalculo * 0.275;
+        if (baseCalculo <= 33919.80) {
+            imposto = baseCalculo * 0.075 - 2022.24;
+            return imposto;
+        } else if (baseCalculo <= 45012.60) {
+            imposto = baseCalculo * 0.15 - 4566.23;
+            return imposto;
+        } else if (baseCalculo <= 55976.16) {
+            imposto = baseCalculo * 0.225 - 7942.17;
+            return imposto;
         }
 
-        // Penalidade por não declarar previdência
-        if (previdenciaPrivada == 0 && baseCalculo > 5000) {
-            imposto += 100; // multa fictícia
-        }
-
-        // Isenção extra se tiver mais de 3 dependentes e renda baixa
-        if (dependentes >= 3 && rendaMensal <= 3500) {
-            imposto *= 0.9; // 10% de desconto
-        }
-
+        imposto = baseCalculo * 0.275 - 10740.98;
         return imposto;
     }
 }
