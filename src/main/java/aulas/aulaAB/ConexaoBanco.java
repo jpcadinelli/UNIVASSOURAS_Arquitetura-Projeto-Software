@@ -1,4 +1,4 @@
-package aulas.dois;
+package aulas.aulaAB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

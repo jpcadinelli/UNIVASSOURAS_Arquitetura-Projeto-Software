@@ -1,4 +1,4 @@
-package aulas.dois;
+package aulas.aulaAB;
 
 import org.junit.jupiter.api.Test;
 
