@@ -567,3 +567,7 @@ class ServicoFormaturaTest {
 ```
 
 # 3. Abstract Factory
+
+# 4. Bridge
+
+# 5. Decorator
